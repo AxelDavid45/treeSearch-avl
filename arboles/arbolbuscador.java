@@ -65,10 +65,10 @@ public class arbolbuscador {
         //Comprueba que no este vacio
         if (raizSub == null) {
             return null;
-        } else if (buscado.igualQue((nodo)raizSub.getDato()))//Comprueba si el elemento esta en la raiz del arbol
+        } else if (buscado.igualQue(raizSub.getDato()))//Comprueba si el elemento esta en la raiz del arbol
         {
             return root;
-        } else if (buscado.menorQue((nodo)raizSub.getDato())) //Comienza busqueda por la izq
+        } else if (buscado.menorQue((raizSub.getDato()))) //Comienza busqueda por la izq
         {
             return search(raizSub.getBack(), buscado);
         } else {

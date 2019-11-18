@@ -8,8 +8,7 @@ public class Implementacionarbol {
     public static void main(String[] args) {
         try {
             arbolbuscador myTree= new arbolbuscador();
-            
-            
+                        
             myTree.insertar(new nodo(8));
             myTree.insertar(new nodo(3));
             myTree.insertar(new nodo(1));
@@ -17,7 +16,14 @@ public class Implementacionarbol {
             myTree.insertar(new nodo(10));
             myTree.insertar(new nodo(5));
             
+            
+            
+            
+            
             myTree.print(myTree.getRoot());
+            System.out.println("-----------");
+         
+            //System.out.println(((nodo) myTree.search(myTree.getRoot(), new nodo(5)).getDato()).getDato());
 //         if(myTree.delete(myTree.getRoot(), new nodo(10))==null)
 //             System.out.println("Nodo eliminado");
 //         else
