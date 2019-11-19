@@ -55,7 +55,7 @@ public class arbolbuscador {
     public void print(nodo root) {
         if (root != null) {
             print(root.getBack());
-            System.out.println(((nodo)root.getDato()).getDato());
+            System.out.println(((nodo) root.getDato()).getDato());
             print(root.getNext());
         }
     }
@@ -65,10 +65,10 @@ public class arbolbuscador {
         //Comprueba que no este vacio
         if (raizSub == null) {
             return null;
-        } else if (buscado.igualQue((nodo)raizSub.getDato()))//Comprueba si el elemento esta en la raiz del arbol
+        } else if (buscado.igualQue((nodo) raizSub.getDato()))//Comprueba si el elemento esta en la raiz del arbol
         {
             return root;
-        } else if (buscado.menorQue((nodo)raizSub.getDato())) //Comienza busqueda por la izq
+        } else if (buscado.menorQue((nodo) raizSub.getDato())) //Comienza busqueda por la izq
         {
             return search(raizSub.getBack(), buscado);
         } else {
@@ -79,11 +79,11 @@ public class arbolbuscador {
     public nodo delete(nodo raizSub, nodo dato) {
         if (raizSub == null) {
             System.out.println("No encontrado el nodo con la clave");
-        } else if (dato.menorQue(((nodo) raizSub.getDato()).getDato())) {
+        } else if (dato.menorQue((raizSub.getDato()))) {
             nodo iz;
             iz = delete(raizSub.getBack(), dato);
             raizSub.linkBack(iz);
-        } else if (dato.mayorQue(((nodo)raizSub.getDato()).getDato())) {
+        } else if (dato.mayorQue(raizSub.getDato())) {
             nodo dr;
             dr = delete(raizSub.getNext(), dato);
             raizSub.linkNext(dr);
@@ -91,12 +91,10 @@ public class arbolbuscador {
             nodo q;
             q = raizSub;
             if (q.getBack() == null) {
-                raizSub = q.getNext();
-            }
-            if (q.getNext() == null) {
-                raizSub = q.getBack();
-            }
-            else {
+                raizSub = (nodo) q.getNext();
+            } else if (q.getNext() == null) {
+                raizSub = (nodo) q.getBack();
+            } else {
                 q = replace(q);
             }
             q = null;
@@ -200,11 +198,11 @@ public class arbolbuscador {
     public void insertar(nodo valor) throws Exception {
         nodo dato;
         Logical h = new Logical(false); // intercambia un valor booleano
-        dato =  valor;
+        dato = valor;
         root = insertarAvl(root, dato, h);
     }
 
-    public nodo insertarAvl(nodo raiz, nodo dt, Logical h) throws Exception{
+    public nodo insertarAvl(nodo raiz, nodo dt, Logical h) throws Exception {
         nodo n1;
         if (raiz == null) {
             raiz = new nodo(dt);
@@ -263,6 +261,123 @@ public class arbolbuscador {
             throw new Exception("No puede haber claves repetidas ");
         }
         return raiz;
+    }
+
+    public void eliminar(nodo valor) throws Exception {
+        nodo dato;
+        dato =  valor;
+        Logical flag = new Logical(false);
+        root = borrarAvl(root, dato, flag);
+    }
+
+    private nodo borrarAvl(nodo r, nodo clave,Logical cambiaAltura) throws Exception {
+        if (r == null) {
+            throw new Exception(" Nodo no encontrado ");
+        } else if (clave.menorQue(r.getDato())) {
+            nodo iz;
+            iz = borrarAvl((nodo) r.getBack(), clave, cambiaAltura);
+            r.linkBack(iz);
+            if (cambiaAltura.booleanValue()) {
+                r = equilibrar1(r, cambiaAltura);
+            }
+        } else if (clave.mayorQue(r.getDato())) {
+            nodo dr;
+            dr = borrarAvl((nodo) r.getNext(), clave, cambiaAltura);
+            r.linkNext(dr);
+            if (cambiaAltura.booleanValue()) {
+                r = equilibrar2(r, cambiaAltura);
+            }
+        } else // Nodo encontrado
+        {
+            nodo q;
+            q = r; // nodo a quitar del árbol
+            if (q.getBack()== null) {
+                r = (nodo) q.getNext();
+                cambiaAltura.setLogical(true);
+            } else if (q.getNext()== null) {
+                r = (nodo) q.getBack();
+                cambiaAltura.setLogical(true);
+            } else { // tiene rama izquierda y derecha
+
+                nodo iz;
+                iz = reemplazar(r, (nodo) r.getBack(), cambiaAltura);
+                r.linkBack(iz);
+                if (cambiaAltura.booleanValue()) {
+                    r = equilibrar1(r, cambiaAltura);
+                }
+            }
+            q = null;
+        }
+        return r;
+    }
+
+    private nodo reemplazar(nodo n, nodo act, Logical cambiaAltura) {
+        if (act.getNext()!= null) {
+            nodo d;
+            d = reemplazar(n, (nodo) act.getNext(), cambiaAltura);
+            act.linkNext(d);
+            if (cambiaAltura.booleanValue()) {
+                act = equilibrar2(act, cambiaAltura);
+            }
+        } else {
+            n.putDato(act.getDato());
+            n = act;
+            act = (nodo) act.getBack();
+            n = null;
+            cambiaAltura.setLogical(true);
+        }
+        return act;
+    }
+
+    private nodo equilibrar1(nodo n, Logical cambiaAltura) {
+        nodo n1;
+        switch (n.fe) {
+            case -1:
+                n.fe = 0;
+                break;
+            case 0:
+                n.fe = 1;
+                cambiaAltura.setLogical(false);
+                break;
+            case +1: //se aplicar un tipo de rotación derecha
+                n1 = (nodo) n.getNext();
+                if (n1.fe >= 0) {
+                    if (n1.fe == 0) //la altura no vuelve a disminuir
+                    {
+                        cambiaAltura.setLogical(false);
+                    }
+                    n = rotacionDD(n, n1);
+                } else {
+                    n = rotacionDI(n, n1);
+                }
+                break;
+        }
+        return n;
+    }
+
+    private nodo equilibrar2(nodo n, Logical cambiaAltura) {
+        nodo n1;
+        switch (n.fe) {
+            case -1: // Se aplica un tipo de rotación izquierda
+                n1 = (nodo) n.getBack();
+                if (n1.fe <= 0) {
+                    if (n1.fe == 0) {
+                        cambiaAltura.setLogical(false);
+                    }
+                    n = rotacionII(n, n1);
+                } else {
+                    n = rotacionID(n, n1);
+                }
+                break;
+            case 0:
+                n.fe = -1;
+                cambiaAltura.setLogical(false);
+                break;
+            case +1:
+                n.fe = 0;
+                break;
+        }
+        return n;
     }
 
 }

@@ -16,18 +16,16 @@ public class Implementacionarbol {
             myTree.insertar(new nodo(10));
             myTree.insertar(new nodo(5));
             
-            
-            
-            
-            
             myTree.print(myTree.getRoot());
             System.out.println("-----------");
+            myTree.eliminar(new nodo(10));
+            myTree.print(myTree.getRoot());
          
-         if(myTree.delete(myTree.getRoot(), new nodo(10))==null)
-             System.out.println("Nodo eliminado");
-         else
-             System.out.println("Nodo no encontrado");
-         myTree.print(myTree.getRoot());
+//         if(myTree.delete(myTree.getRoot(), new nodo(10)) ==null)
+//             System.out.println("Nodo eliminado");
+//         else
+//             System.out.println("Nodo no encontrado");
+//         myTree.print(myTree.getRoot());
         } catch (Exception ex) {
             Logger.getLogger(Implementacionarbol.class.getName()).log(Level.SEVERE, null, ex);
         }
