@@ -265,12 +265,12 @@ public class arbolbuscador {
 
     public void eliminar(nodo valor) throws Exception {
         nodo dato;
-        dato =  valor;
+        dato = valor;
         Logical flag = new Logical(false);
         root = borrarAvl(root, dato, flag);
     }
 
-    private nodo borrarAvl(nodo r, nodo clave,Logical cambiaAltura) throws Exception {
+    private nodo borrarAvl(nodo r, nodo clave, Logical cambiaAltura) throws Exception {
         if (r == null) {
             throw new Exception(" Nodo no encontrado ");
         } else if (clave.menorQue(r.getDato())) {
@@ -291,10 +291,10 @@ public class arbolbuscador {
         {
             nodo q;
             q = r; // nodo a quitar del árbol
-            if (q.getBack()== null) {
+            if (q.getBack() == null) {
                 r = (nodo) q.getNext();
                 cambiaAltura.setLogical(true);
-            } else if (q.getNext()== null) {
+            } else if (q.getNext() == null) {
                 r = (nodo) q.getBack();
                 cambiaAltura.setLogical(true);
             } else { // tiene rama izquierda y derecha
@@ -312,7 +312,7 @@ public class arbolbuscador {
     }
 
     private nodo reemplazar(nodo n, nodo act, Logical cambiaAltura) {
-        if (act.getNext()!= null) {
+        if (act.getNext() != null) {
             nodo d;
             d = reemplazar(n, (nodo) act.getNext(), cambiaAltura);
             act.linkNext(d);
@@ -378,6 +378,17 @@ public class arbolbuscador {
                 break;
         }
         return n;
+    }
+
+    //metodo altura
+    static int altura(NodoAvl r) // calcula y devuelve altura
+    {
+        if (r != null) {
+            return mayor(altura((NodoAvl) r.subarbolIzdo()),
+                    altura((NodoAvl) r.subarbolDcho())) + 1;
+        } else {
+            return 0;
+        }
     }
 
 }
