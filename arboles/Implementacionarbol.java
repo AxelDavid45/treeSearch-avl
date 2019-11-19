@@ -23,11 +23,7 @@ public class Implementacionarbol {
             System.out.println("-------------");
             System.out.println("Altura del arbol: "+myTree.altura(myTree.getRoot()));
 
-//         if(myTree.delete(myTree.getRoot(), new nodo(10)) ==null)
-//             System.out.println("Nodo eliminado");
-//         else
-//             System.out.println("Nodo no encontrado");
-//         myTree.print(myTree.getRoot());
+              
         } catch (Exception ex) {
             Logger.getLogger(Implementacionarbol.class.getName()).log(Level.SEVERE, null, ex);
         }
