@@ -20,6 +20,8 @@ public class Implementacionarbol {
             System.out.println("-----------");
             myTree.eliminar(new nodo(10));
             myTree.print(myTree.getRoot());
+            System.out.println("-------------");
+            System.out.println("Altura del arbol: "+myTree.altura(myTree.getRoot()));
 
 //         if(myTree.delete(myTree.getRoot(), new nodo(10)) ==null)
 //             System.out.println("Nodo eliminado");

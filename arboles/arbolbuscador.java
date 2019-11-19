@@ -381,14 +381,18 @@ public class arbolbuscador {
     }
 
     //metodo altura
-    static int altura(NodoAvl r) // calcula y devuelve altura
+    public  int altura(nodo r) // calcula y devuelve altura
     {
         if (r != null) {
-            return mayor(altura((NodoAvl) r.subarbolIzdo()),
-                    altura((NodoAvl) r.subarbolDcho())) + 1;
+            return mayor(altura((nodo) r.getBack()),
+                    altura((nodo) r.getNext())) + 1;
         } else {
             return 0;
         }
+    }
+
+    private int mayor(int x, int y) {
+        return (x > y ? x : y);
     }
 
 }
