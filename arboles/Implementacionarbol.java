@@ -23,12 +23,11 @@ public class Implementacionarbol {
             myTree.print(myTree.getRoot());
             System.out.println("-----------");
          
-            //System.out.println(((nodo) myTree.search(myTree.getRoot(), new nodo(5)).getDato()).getDato());
-//         if(myTree.delete(myTree.getRoot(), new nodo(10))==null)
-//             System.out.println("Nodo eliminado");
-//         else
-//             System.out.println("Nodo no encontrado");
-//         myTree.print(myTree.getRoot());
+         if(myTree.delete(myTree.getRoot(), new nodo(10))==null)
+             System.out.println("Nodo eliminado");
+         else
+             System.out.println("Nodo no encontrado");
+         myTree.print(myTree.getRoot());
         } catch (Exception ex) {
             Logger.getLogger(Implementacionarbol.class.getName()).log(Level.SEVERE, null, ex);
         }

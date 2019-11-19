@@ -68,7 +68,7 @@ public class arbolbuscador {
         } else if (buscado.igualQue((nodo)raizSub.getDato()))//Comprueba si el elemento esta en la raiz del arbol
         {
             return root;
-        } else if (buscado.menorQue((raizSub.getDato()))) //Comienza busqueda por la izq
+        } else if (buscado.menorQue((nodo)raizSub.getDato())) //Comienza busqueda por la izq
         {
             return search(raizSub.getBack(), buscado);
         } else {
@@ -79,11 +79,11 @@ public class arbolbuscador {
     public nodo delete(nodo raizSub, nodo dato) {
         if (raizSub == null) {
             System.out.println("No encontrado el nodo con la clave");
-        } else if (dato.menorQue((nodo)raizSub.getDato())) {
+        } else if (dato.menorQue(((nodo) raizSub.getDato()).getDato())) {
             nodo iz;
             iz = delete(raizSub.getBack(), dato);
             raizSub.linkBack(iz);
-        } else if (dato.mayorQue((nodo)raizSub.getDato())) {
+        } else if (dato.mayorQue(((nodo)raizSub.getDato()).getDato())) {
             nodo dr;
             dr = delete(raizSub.getNext(), dato);
             raizSub.linkNext(dr);
@@ -91,8 +91,12 @@ public class arbolbuscador {
             nodo q;
             q = raizSub;
             if (q.getBack() == null) {
+                raizSub = q.getNext();
+            }
+            if (q.getNext() == null) {
                 raizSub = q.getBack();
-            } else {
+            }
+            else {
                 q = replace(q);
             }
             q = null;
